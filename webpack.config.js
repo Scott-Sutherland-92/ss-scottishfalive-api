@@ -13,7 +13,7 @@ module.exports = {
   mode: dev ? "development" : "production",
   devtool: dev ? "source-map" : "none",
   entry: {
-    sssfaliveapiscripts: "./_src/_includes/js/scripts.js",
+    sssfaliveapi: "./_src/_includes/js/scripts.js",
   },
   output: {
     filename: "[name].[hash].js"
