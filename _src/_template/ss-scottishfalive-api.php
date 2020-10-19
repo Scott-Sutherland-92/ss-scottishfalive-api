@@ -28,11 +28,12 @@ if (!class_exists('SSScottishFaLive')) {
 	class SSScottishFaLive
 	{
 		private static $instance;
-		private $version = "0.0.1";
+		private $version = "0.0.4";
 
 		// API KEYS
 		protected static $clientID = "645071006";
 		protected static $clientKey = "2E5312231BAFB96528924F2C7F249DE1";
+		protected static $baseURL = "https://api.scottishfalive.co.uk/resources/api/v1/swf";
 
 		function __construct()
 		{
@@ -57,6 +58,7 @@ if (!class_exists('SSScottishFaLive')) {
 				$mainTableSql = "CREATE TABLE $tableName (
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
 					comp_id int(5) NOT NULL,
+					season int(5) NOT NULL,
 					comp_info longtext NULL,
 					data_fixtures longtext NULL,
 					data_results longtext NULL,
@@ -107,6 +109,32 @@ if (!class_exists('SSScottishFaLive')) {
 			return $response;
 		}
 
+		/**
+		 * Check DB For Outdated Data 
+		 */
+		public static function checkDataForTimeDiff($data)
+		{
+			$timeNow = time();
+			$lastUpdated = strtotime($data->last_updated);
+			$timeDiff = $timeNow - $lastUpdated;
+
+			$output = ($timeDiff > 3600) ? true : false;
+
+			return $output;
+		}
+
+		public function getDatabaseData($compID, $season) {
+			global $wpdb;
+
+			$tableName = $wpdb->prefix . "sfaApiIntegration";
+			$sql = "SELECT * FROM $tableName WHERE comp_id = '$compID' AND season = '$season'";
+			$data = $wpdb->get_row($sql);
+
+			$output = $data ? $data : null;
+
+			return $output;
+		}
+
 		public static function get_instance()
 		{
 			if ( null == self::$instance ) {
@@ -138,6 +166,9 @@ if (!class_exists('SSScottishFaLive')) {
 	add_action( 'plugins_loaded', ['SSScottishFaLive', 'get_instance']);
 
 	require '_functions/endpoints.php';
+	require '_functions/comp_info.php';
+	require '_functions/fixtures.php';
+	require '_functions/results.php';
 	require '_functions/league_table.php';
 
 } 

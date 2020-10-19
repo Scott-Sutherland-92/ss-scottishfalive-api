@@ -2,19 +2,21 @@ import axios from "axios";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-class LeagueCompetition extends Component {
+import LeagueCompetition from "./LeagueCompetition";
+
+class CompetitionRoot extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isLoading: true,
 			season: "",
-			tab: "fixtures",
+			comp: "",
 			data: [],
+			type: "League",
 		};
 	}
 
 	componentDidMount() {
-		console.log("Mounted Component");
 		const season = document
 			.getElementById("leagueCompetitionRoot")
 			.getAttribute("data-season");
@@ -23,13 +25,26 @@ class LeagueCompetition extends Component {
 			.getElementById("leagueCompetitionRoot")
 			.getAttribute("data-comp");
 
-		let endpointURL = "/wp-json/sfalive/v1/compdata/" + comp;
+		this.setState({
+			season: season,
+			comp: comp,
+		});
+
+		this.fetchData(comp, season);
+	}
+
+	fetchData(compID, season) {
+		let endpointURL =
+			"/wp-json/sfalive/v1/compdata/" +
+			compID +
+			"/" +
+			season;
 		axios
 			.get(endpointURL)
 			.then((response) => {
 				this.setState({
-					season: season,
 					data: response.data,
+					type: response.data.info.DATA.competitiontype,
 					isLoading: false,
 				});
 			})
@@ -38,67 +53,28 @@ class LeagueCompetition extends Component {
 			});
 	}
 
-	handleClick = (e) => {
-		let tab = e.target.getAttribute("data-tab");
-		this.setState((state) => ({
-			tab: tab
-		}));
-	};
-
 	render() {
 		let content;
-		let activeClass;
-		switch (this.state.tab) {
-			case "table":
-				activeClass = "active__table";
-				content = this.state.isLoading ? (
-					<div>LOADING...</div>
-				) : (
-					<div>TABLE DATA</div>
-				);
-				break;
-			case "results":
-				activeClass = "active__results";
-				content = this.state.isLoading ? (
-					<div>LOADING...</div>
-				) : (
-					<div>RESULT DATA</div>
-				);
+		switch (this.state.type) {
+			case "Cup":
+				content = <h1>Cup Competition</h1>;
 				break;
 			default:
-				activeClass = "active__fixtures";
-				content = this.state.isLoading ? (
-					<div>LOADING...</div>
-				) : (
-					<div>FIXTURE DATA</div>
-				);
+				content = <LeagueCompetition data={this.state.data} />;
 		}
 
-		return (
-			<div id="sfaComp__container">
-				<div className={`cf__tabButtons ${activeClass}`}>
-					<ul>
-						<li
-							onClick={this.handleClick}
-							data-tab="fixtures"
-						>
-							Fixtures
-						</li>
-						<li onClick={this.handleClick} data-tab="results">
-							Results
-						</li>
-						<li onClick={this.handleClick} data-tab="table">
-							League Table
-						</li>
-					</ul>
-				</div>
-				{content}
-			</div>
+		let renderObj;
+		renderObj = this.state.isLoading ? (
+			<div className="ssfaComp__loadingBlock">LOADING</div>
+		) : (
+			<React.Fragment>{content}</React.Fragment>
 		);
+
+		return <div id="sfaComp__container">{renderObj}</div>;
 	}
 }
 
 const componentRoot = document.getElementById("leagueCompetitionRoot");
 if (componentRoot) {
-	ReactDOM.render(<LeagueCompetition />, componentRoot);
+	ReactDOM.render(<CompetitionRoot />, componentRoot);
 }

@@ -2,6 +2,148 @@
 	style.scss - Plugin Styles
 ======================================================== */ 
 
-body {
-	display: block;
-}
+$extra-small: "screen and (min-width: 601px)";
+$small: "screen and (min-width: 768px)";
+$medium: "screen and (min-width: 992px)";
+$large: "screen and (min-width: 1200px)";
+$extraLarge: "screen and (min-width: 1500px)";
+
+$dark	: #000000;
+$light 	: #F4F4F4;
+
+#sfaComp__container {
+	margin: 0 auto;
+	max-width: 900px;
+	padding: 30px 0 100px;
+
+	@keyframes ssfaComp_rotateLoaderBlock {
+		0% {transform: rotate(0deg)}
+		100% {transform: rotate(360deg)}
+	}
+
+	.ssfaComp__loadingBlock {
+		background: $light;
+		border-radius: 10px;
+		font-size: 12px;
+		padding: 50px;
+		position: relative;
+		text-align: center;
+
+		@media #{$small}{ padding: 100px; }
+
+		&:before {
+			animation: ssfaComp_rotateLoaderBlock 2s linear infinite forwards;
+			border: solid 3px darken($light, 10%);
+			border-radius: 30px;
+			border-right: solid 3px transparent;
+			content: " ";
+			display: block;
+			height: 30px;
+			margin: 0 auto 10px;
+			width: 30px;
+			z-index: 10;
+		}
+	}
+
+	.sfaComp__tabButtons {
+		margin-bottom: 30px;
+
+		&.active__fixtures {
+			li:first-child {
+				background: $dark;
+				color: white;
+			}
+		}
+
+		&.active__results {
+			li:nth-child(2) {
+				background: $dark;
+				color: white;
+			}
+		}
+
+		&.active__table {
+			li:last-child {
+				background: $dark;
+				color: white;
+			}
+		}
+
+		ul {
+			border: solid 1px $light;
+			border-radius: 10px;
+			display: flex;
+			margin: 0;
+			overflow: hidden;
+			padding: 0;
+
+			li {
+				background: $light;
+				cursor: pointer;
+				display: block;
+				font-weight: 700;
+				margin: 0;
+				padding: 15px;
+				text-align: center;
+				width: 33.333333%;
+
+				&:hover {
+					background: darken($light, 20%);
+					color: white;
+				}
+			}
+		}
+	} // .cf__tabButtons
+
+	.sfaComp_leagueTable {
+		margin: 0 auto;
+		width: 100%;
+
+		.sfaComp__table-head {
+			background: $dark;
+			color: white;
+			font-weight: 700;
+		}
+
+		.sfaComp__table-row {
+			align-items: center;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			padding: 0 10px; 
+
+			&:nth-child(even) {
+				background: $light;
+			}
+
+			span {
+				display: block;
+				font-size: 12px;
+				max-width: 30px;
+				padding: 10px 0;
+				text-align: center;
+				width: calc(50% / 3);
+
+				@media #{$small}{
+					font-size: 1em;
+				}
+
+				&.hiddenMobile {
+					display: none;
+
+					@media #{$small}{
+						display: block;
+					}
+				}
+
+				&:nth-child(2) {
+					max-width: 50%;
+					min-width: 50%;
+					text-align: left;
+					width: auto;
+				}
+			}
+		}
+	} // .sfaComp_leagueTable
+} // #sfaComp__container

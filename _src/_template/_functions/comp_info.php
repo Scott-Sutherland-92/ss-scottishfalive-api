@@ -1,15 +1,15 @@
 <?php
 /**
- * League Table Class
+ * Comp Info Class
  */
-class SSSFALeagueTable extends SSScottishFaLive
+class SSSFACompInfo extends SSScottishFaLive
 {
 	function __construct()
 	{
 		// error_log(print_r("League Table Class Constructed", true));
 	}
 
-	public function getLeagueTable(
+	public function getCompInfo(
 		$data,
 		$compID,
 		$season,
@@ -18,10 +18,10 @@ class SSSFALeagueTable extends SSScottishFaLive
 		// Get From API
 		if ($forceUpdate) {
 			$source = "api";
-			$outputData = $this->apiLeagueTable($compID, $season, $data);
+			$outputData = $this->apiCompInfo($compID, $season, $data);
 		} else {
 			$source = "database";
-			$outputData = unserialize($data->data_table);
+			$outputData = unserialize($data->comp_info);
 		}
 
 		// Return
@@ -31,15 +31,9 @@ class SSSFALeagueTable extends SSScottishFaLive
 		];
 	}
 
-	private function apiLeagueTable($compID, $season, $databaseData = null)
+	private function apiCompInfo($compID, $season, $databaseData = null)
 	{
-		$url =
-			parent::$baseURL .
-			'/leaguetable.cfc?method=getJSON&competitionID=' .
-			$compID .
-			'&SeasonName=' .
-			$season .
-			'';
+		$url = parent::$baseURL . '/competition.cfc?method=getJSON&competitionID=' . $compID;
 		$response = parent::queryAPI($url);
 
 		// PARSE DATA
@@ -48,7 +42,7 @@ class SSSFALeagueTable extends SSScottishFaLive
 		$uploadData = $response ? serialize($output) : null;
 		$tableData = [
 			"comp_id" => $compID,
-			"data_table" => $uploadData,
+			"comp_info" => $uploadData,
 			"last_updated" => date('Y-m-d H:i:s'),
 			"season" => $season,
 		];
@@ -68,7 +62,7 @@ class SSSFALeagueTable extends SSScottishFaLive
 		return $output;
 	}
 
-	private function dbLeagueTable($compID, $season)
+	private function dbCompInfo($compID, $season)
 	{
 		global $wpdb;
 
@@ -78,6 +72,7 @@ class SSSFALeagueTable extends SSScottishFaLive
 
 		$output = $data ? $data : null;
 
-		return $output->data_table;
+		return $output->comp_info;
 	}
 }
+
