@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 
 import LeagueTable from "./LeagueTable";
+import Fixtures from "./Fixtures";
 
 export default class LeagueCompetition extends Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ export default class LeagueCompetition extends Component {
 				break;
 			default:
 				activeClass = "active__fixtures";
-				content = <div>FIXTURE DATA</div>;
+				content = <Fixtures data={this.props.data.fixtures} comptype="league" />;
 		}
 
 		return (

@@ -96,5 +96,9 @@
     "ios >= 7",
     "android >= 4",
     "bb >= 10"
-  ]
+  ],
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "react-lodash": "^0.1.2"
+  }
 }

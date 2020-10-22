@@ -51,7 +51,7 @@ function sssfa_getCompData( $request )
 
 		$output = [
 			"info" => $compInfo_data,
-			"table" => $leagueTable_data,
+			"table" => $leagueTable_data, 
 			"fixtures" => $fixtures_data,
 			"results" => $results_data,
 		];
