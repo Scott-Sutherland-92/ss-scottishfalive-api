@@ -11,7 +11,7 @@
 register_activation_hook( __FILE__, 'SSScottishFaLive_activate_plugin' );
 function SSScottishFaLive_activate_plugin()
 {
-	error_log(print_r("Activated Scottish FA Live Plugin", true)); 
+	add_option('sfa_apiIntegration_version', "", false);
 }
 
 // Deactivation Code
@@ -28,7 +28,7 @@ if (!class_exists('SSScottishFaLive')) {
 	class SSScottishFaLive
 	{
 		private static $instance;
-		private $version = "0.0.10";
+		private $version = "1.0.0";
 
 		// API KEYS
 		protected static $clientID = "645071006";

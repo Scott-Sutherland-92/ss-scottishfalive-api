@@ -1,6 +1,6 @@
 /* ========================================================
 	style.scss - Plugin Styles
-======================================================== */ 
+======================================================== */
 
 $extra-small: "screen and (min-width: 601px)";
 $small: "screen and (min-width: 768px)";
@@ -8,8 +8,8 @@ $medium: "screen and (min-width: 992px)";
 $large: "screen and (min-width: 1200px)";
 $extraLarge: "screen and (min-width: 1500px)";
 
-$dark	: #000000;
-$light 	: #F4F4F4;
+$sfaDark: #000000;
+$sfaLight: #f4f4f4;
 
 #sfaComp__container {
 	margin: 0 auto;
@@ -17,23 +17,29 @@ $light 	: #F4F4F4;
 	padding: 30px 0 100px;
 
 	@keyframes ssfaComp_rotateLoaderBlock {
-		0% {transform: rotate(0deg)}
-		100% {transform: rotate(360deg)}
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 
 	.ssfaComp__loadingBlock {
-		background: $light;
+		background: $sfaLight;
 		border-radius: 10px;
 		font-size: 12px;
 		padding: 50px;
 		position: relative;
 		text-align: center;
 
-		@media #{$small}{ padding: 100px; }
+		@media #{$small} {
+			padding: 100px;
+		}
 
 		&:before {
 			animation: ssfaComp_rotateLoaderBlock 2s linear infinite forwards;
-			border: solid 3px darken($light, 10%);
+			border: solid 3px darken($sfaLight, 10%);
 			border-radius: 30px;
 			border-right: solid 3px transparent;
 			content: " ";
@@ -53,7 +59,7 @@ $light 	: #F4F4F4;
 			font-size: 18px;
 			margin-bottom: 10px;
 
-			@media #{$small}{
+			@media #{$small} {
 				font-size: 32px;
 			}
 		}
@@ -68,35 +74,34 @@ $light 	: #F4F4F4;
 
 		&.active__fixtures {
 			li:first-child {
-				background: $dark;
+				background: $sfaDark;
 				color: white;
 			}
 		}
 
 		&.active__results {
 			li:nth-child(2) {
-				background: $dark;
+				background: $sfaDark;
 				color: white;
 			}
 		}
 
 		&.active__table {
 			li:last-child {
-				background: $dark;
+				background: $sfaDark;
 				color: white;
 			}
 		}
 
 		ul {
-			border: solid 1px $light;
-			border-radius: 10px;
+			border: solid 1px $sfaLight;
 			display: flex;
 			margin: 0;
 			overflow: hidden;
 			padding: 0;
 
 			li {
-				background: $light;
+				background: $sfaLight;
 				cursor: pointer;
 				display: block;
 				flex-grow: 1;
@@ -107,7 +112,7 @@ $light 	: #F4F4F4;
 				text-align: center;
 
 				&:hover {
-					background: darken($light, 20%);
+					background: darken($sfaLight, 20%);
 					color: white;
 				}
 			}
@@ -119,7 +124,7 @@ $light 	: #F4F4F4;
 		width: 100%;
 
 		.sfaComp__table-head {
-			background: $dark;
+			background: $sfaDark;
 			color: white;
 			font-weight: 700;
 		}
@@ -130,10 +135,10 @@ $light 	: #F4F4F4;
 			flex-direction: row;
 			flex-wrap: nowrap;
 			justify-content: space-between;
-			padding: 0 10px; 
+			padding: 0 10px;
 
 			&:nth-child(even) {
-				background: $light;
+				background: $sfaLight;
 			}
 
 			span {
@@ -144,14 +149,14 @@ $light 	: #F4F4F4;
 				text-align: center;
 				width: calc(50% / 3);
 
-				@media #{$small}{
+				@media #{$small} {
 					font-size: 1em;
 				}
 
 				&.hiddenMobile {
 					display: none;
 
-					@media #{$small}{
+					@media #{$small} {
 						display: block;
 					}
 				}
@@ -173,15 +178,18 @@ $light 	: #F4F4F4;
 		overflow: hidden;
 		padding: 0;
 
-		&.active__match_group { 
-			height: auto; 
+		&.active__match_group {
+			height: auto;
+			margin-bottom: 30px;
 
 			li.sfaComp__match_date {
 				a {
-					background: $dark;
+					background: $sfaDark;
 					height: auto;
 
-					i { transform: rotate(180deg); }
+					i {
+						transform: rotate(180deg);
+					}
 				}
 			}
 		}
@@ -191,7 +199,7 @@ $light 	: #F4F4F4;
 			padding: 0;
 
 			a {
-				background-color: $dark;
+				background-color: $sfaDark;
 				color: white;
 				display: block;
 				font-weight: 400;
@@ -214,27 +222,35 @@ $light 	: #F4F4F4;
 				}
 			}
 		}
-		
+
 		.sfaComp__fixture {
 			align-items: center;
-			border: solid 1px $light;
+			border-bottom: solid 1px $sfaLight;
 			display: flex;
 			flex-wrap: wrap;
-			margin: 10px 0;
-			padding: 15px;
+			margin: 5px 0;
 			position: relative;
 			width: 100%;
 
+			&:hover {
+				background: $sfaLight;
+			}
+
+			&.fixture__activeDetails {
+				background: $sfaLight;
+
+				.fixture__details .fixture__details-game {
+					display: flex;
+				}
+			}
+
 			&:nth-child(odd) {
-				// background-color: $light;
+				// background-color: $sfaLight;
 			}
 
 			.fixture__match-up {
+				padding: 10px;
 				width: 100%;
-
-				@media #{$small}{
-					width: 75%;
-				}
 
 				.match-up__content {
 					align-items: center;
@@ -245,7 +261,7 @@ $light 	: #F4F4F4;
 						text-align: left;
 						width: 40%;
 
-						@media #{$small}{
+						@media #{$small} {
 							text-align: right;
 						}
 					}
@@ -254,20 +270,21 @@ $light 	: #F4F4F4;
 						text-align: right;
 						width: 40%;
 
-						@media #{$small}{
+						@media #{$small} {
 							text-align: left;
 						}
 					}
 
-					.match-up__team-name {	
+					.match-up__team-name {
 						display: block;
 						font-size: 0.9em;
 						overflow: hidden;
-						text-overflow: ellipsis;	
-						white-space: nowrap;			
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 
-					.match-up__vs, .match-up__score {
+					.match-up__vs,
+					.match-up__score {
 						font-weight: 700;
 						position: relative;
 						text-align: center;
@@ -275,37 +292,47 @@ $light 	: #F4F4F4;
 
 						span {
 							display: inline-block;
-							padding: 10px;
+							padding: 0 10px;
 						}
 					}
 				}
 			}
 
 			.fixture__details {
-				margin-bottom: 20px;
 				width: 100%;
 
-				@media #{$small}{ 
-					border-right: solid 1px darken($light, 10%);
-					margin-bottom: 0;
-					padding: 10px 0;
-					width: 25%; }
-
-				.fixture__details-venue, .fixture__details--kickoff {
+				.fixture__details-game {
 					align-items: center;
-					display: flex;
-					font-size: 0.8em;
-					justify-content: center;
-					vertical-align: middle;
+					background: darken($sfaLight, 3%);
+					display: none;
+					flex-wrap: wrap;
+					padding: 10px;
 
-					@media #{$small}{
-						justify-content: flex-start;
-					}
+					.fixture__details-game-item {
+						align-items: center;
+						display: flex;
+						flex-grow: 1;
+						font-size: 0.8em;
+						justify-content: center;
+						margin-bottom: 5px;
+						text-align: center;
+						vertical-align: middle;
+						width: 100%;
 
-					span {
-						display: block;
-						font-size: 1.2em;
-						margin-right: 10px;
+						@media #{$small}{
+							margin: 0;
+							width: 33.33333%;
+						}
+
+						&:last-child {
+							margin: 0;
+						}
+
+						span {
+							display: block;
+							font-size: 1.2em;
+							margin-right: 10px;
+						}
 					}
 				}
 			}
@@ -323,5 +350,14 @@ $light 	: #F4F4F4;
 				}
 			}
 		}
+	} // .sfaComp__match_group
+
+	.sfaComp__noData {
+		background: $sfaLight;
+		padding: 30px;
+		text-align: center;
+		text-transform: uppercase;
+
+		p { margin: 0; opacity: 0.5;}
 	}
 } // #sfaComp__container

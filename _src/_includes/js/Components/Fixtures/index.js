@@ -15,25 +15,36 @@ export default class Fixtures extends Component {
 					let type = context.type;
 					let dataType = context.tab;
 
-					matches = dataType == "results" ? _.reverse(matches) : matches;
+					matches =
+						dataType == "results" ? _.reverse(matches) : matches;
 					let fixtures =
 						type == "League"
 							? _.groupBy(matches, "matchdate")
 							: _.groupBy(matches, "roundname");
 
-					const groups = Object.entries(fixtures).map((row, index) => {
-						return (
-							<React.Fragment key={index}>
-								<FixtureGroup fixtures={row} index={index} />
-							</React.Fragment>
-						);
-					});
+					const groups = Object.entries(fixtures).map(
+						(row, index) => {
+							return (
+								<React.Fragment key={index}>
+									<FixtureGroup
+										fixtures={row}
+										index={index}
+									/>
+								</React.Fragment>
+							);
+						}
+					);
+
+					let noDataMessage =
+						dataType == "fixtures"
+							? "No Upcoming Fixtures"
+							: "No recent results";
 
 					let content = matches.length ? (
 						groups
 					) : (
-						<div>
-							<p>No Data</p>
+						<div className="sfaComp__noData">
+							<p>{noDataMessage}</p>
 						</div>
 					);
 

@@ -1,12 +1,13 @@
 {
   "name": "ss-scottishfalive-api",
   "proxy": "swf.test",
+  "buildPath": "../../public/wp-content/plugins/ss-scottishfalive-api",
   "version": "1.0.0",
   "description": "Scottish FA Live - Wordpress Plugin",
   "main": "index.js",
   "scripts": {
-    "deploy": "/Volumes/GoogleDrive/Shared\\ drives/See\\ Saw\\ Creative/•\\ Assets/Development/Shell\\ Scripts/deploy-plugin.sh",
-    "sync-assets": "/Volumes/GoogleDrive/Shared\\ drives/See\\ Saw\\ Creative/•\\ Assets/Development/Shell\\ Scripts/sync-assets.sh",
+    "deploy": "/Volumes/GoogleDrive/Shared\\ drives/We\\ Shape\\ Master/•\\ Assets/•\\ Dev\\ Assets/Shell\\ Scripts/deploy-plugin.sh",
+    "sync-assets": "/Volumes/GoogleDrive/Shared\\ drives/We\\ Shape\\ Master/•\\ Assets/•\\ Dev\\ Assets/Shell\\ Scripts/sync-assets.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

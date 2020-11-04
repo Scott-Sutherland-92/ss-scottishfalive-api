@@ -2,6 +2,20 @@ import React, { Component } from "react";
 import { Consumer } from "../Context";
 
 export default class FixtureRow extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			details: false,
+		};
+		this.toggleDetailState = this.toggleDetailState.bind(this);
+	}
+
+	toggleDetailState() {
+		this.setState((prevState) => ({
+			details: !prevState.details,
+		}));
+	}
+
 	getKickOff(string) {
 		let date = new Date(string);
 		let kickoff;
@@ -49,7 +63,10 @@ export default class FixtureRow extends Component {
 
 		let hasMessage = extraTime || penalties || amended ? true : false;
 
-		let pkWinners = match.pkscorehome > match.pkscoreaway ? match.homename : match.awayname;
+		let pkWinners =
+			match.pkscorehome > match.pkscoreaway
+				? match.homename
+				: match.awayname;
 
 		let extraTimeMessage = extraTime ? (
 			<p className="info__extraTime">AET</p>
@@ -88,12 +105,49 @@ export default class FixtureRow extends Component {
 					let matchDetails = this.getMatchDetails(match);
 					let scores = this.getMatchScores(match);
 
+					let infoState = this.state.details
+						? "fixture__activeDetails"
+						: null;
+
 					return (
 						<li
-							className={`sfaComp__fixture ${matchType}`}
+							className={`sfaComp__fixture ${matchType} ${infoState}`}
 							data-matchid={matchID}
+							onClick={this.toggleDetailState}
 						>
-							<div className="fixture__details">
+							<div className="fixture__match-up">
+								<div className="match-up__content">
+									<div className="match-up__home">
+										<div className="match-up__team-name">
+											{match.homename}
+										</div>
+									</div>
+									{matchType == "results" ? (
+										<div className="match-up__score">
+											{scores.home}
+											<span>-</span>
+											{scores.away}
+										</div>
+									) : (
+										<div className="match-up__vs">{kickoff}</div>
+									)}
+									<div className="match-up__away">
+										<div className="match-up__team-name">
+											{match.awayname}
+										</div>
+									</div>
+								</div>
+								{matchDetails.hasMessage ? (
+									<div className="fixture__info">
+										<div className="info__content">
+											{matchDetails.pk}
+											{matchDetails.extraTime}
+											{matchDetails.amended}
+										</div>
+									</div>
+								) : null}
+							</div>
+							<div className={`fixture__details`}>
 								<div className="fixture__details-game">
 									<div className="fixture__details-game-item fixture__details-venue">
 										<span className="material-icons">
@@ -114,38 +168,6 @@ export default class FixtureRow extends Component {
 										<div>Kick Off: {kickoff}</div>
 									</div>
 								</div>
-							</div>
-							<div className="fixture__match-up">
-								<div className="match-up__content">
-									<div className="match-up__home">
-										<div className="match-up__team-name">
-											{match.homename}
-										</div>
-									</div>
-									{matchType == "results" ? (
-										<div className="match-up__score">
-											{scores.home}
-											<span>-</span>
-											{scores.away}
-										</div>
-									) : (
-										<div className="match-up__vs">vs</div>
-									)}
-									<div className="match-up__away">
-										<div className="match-up__team-name">
-											{match.awayname}
-										</div>
-									</div>
-								</div>
-								{matchDetails.hasMessage ? (
-									<div className="fixture__info">
-										<div className="info__content">
-											{matchDetails.pk}
-											{matchDetails.extraTime}
-											{matchDetails.amended}
-										</div>
-									</div>
-								) : null}
 							</div>
 						</li>
 					);
