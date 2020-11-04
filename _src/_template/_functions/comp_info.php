@@ -37,7 +37,7 @@ class SSSFACompInfo extends SSScottishFaLive
 		$response = parent::queryAPI($url);
 
 		// PARSE DATA
-		$output = $response ? $response['DATA'] : null;
+		$output = $response ? $response['DATA'][0] : null;
 
 		$uploadData = $response ? serialize($output) : null;
 		$tableData = [
@@ -57,7 +57,7 @@ class SSSFACompInfo extends SSScottishFaLive
 				["id" => $databaseData->id],
 				["%d", "%s", "%s"]
 			)
-			: $wpdb->insert($tableName, $tableData, ["%d", "%s", "%s","%d"]);
+			: $wpdb->insert($tableName, $tableData, ["%d", "%s", "%s","%s"]);
 
 		return $output;
 	}

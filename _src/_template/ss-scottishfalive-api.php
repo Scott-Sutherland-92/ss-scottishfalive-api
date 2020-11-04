@@ -28,7 +28,7 @@ if (!class_exists('SSScottishFaLive')) {
 	class SSScottishFaLive
 	{
 		private static $instance;
-		private $version = "0.0.4";
+		private $version = "0.0.10";
 
 		// API KEYS
 		protected static $clientID = "645071006";
@@ -58,7 +58,7 @@ if (!class_exists('SSScottishFaLive')) {
 				$mainTableSql = "CREATE TABLE $tableName (
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
 					comp_id int(5) NOT NULL,
-					season int(5) NOT NULL,
+					season varchar(255) NOT NULL,
 					comp_info longtext NULL,
 					data_fixtures longtext NULL,
 					data_results longtext NULL,
@@ -157,7 +157,8 @@ if (!class_exists('SSScottishFaLive')) {
 				if (pathinfo($file, PATHINFO_EXTENSION) === 'js') :
 					$fullName = basename($file);
 					$name = substr(basename($fullName), 0, strpos(basename($fullName), '.'));
-					wp_enqueue_script( $name, $plugin_url . '_includes/js/' . $fullName, array() , null, true );
+					$handle = uniqid($name);
+					wp_enqueue_script( $handle, $plugin_url . '_includes/js/' . $fullName, array() , null, true );
 					wp_localize_script( 'sssfaliveapi', 'ajaxsfalive', array('ajaxurl' => admin_url( 'admin-ajax.php' )) );
 				endif;
 			}

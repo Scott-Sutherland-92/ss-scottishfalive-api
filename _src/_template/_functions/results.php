@@ -66,9 +66,9 @@ class SSSFAResults extends SSScottishFaLive
 				$tableName,
 				$tableData,
 				["id" => $databaseData->id],
-				["%d", "%s", "%s"]
+				["%d", "%s", "%s","%s"]
 			)
-			: $wpdb->insert($tableName, $tableData, ["%d", "%s", "%s","%d"]);
+			: $wpdb->insert($tableName, $tableData, ["%d", "%s", "%s","%s"]);
 
 		return $output;
 	}

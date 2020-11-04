@@ -10,7 +10,7 @@ function sssfa_getCompData( $request )
 
 	try {
 		$compID = (int) $request["id"];
-		$season = ($request["season"]) ? (int) $request["season"] : "2020";
+		$season = ($request["season"]) ? (string) $request["season"] : "2019/2020";
 
 		$genericCxn = new SSScottishFaLive();
 
@@ -37,7 +37,7 @@ function sssfa_getCompData( $request )
 				"last_updated" => date('Y-m-d H:i:s'),
 				"season" => $season,
 			];
-			$wpdb->insert($tableName, $tableData, ["%d", "%s", "%d"]);
+			$wpdb->insert($tableName, $tableData, ["%d", "%s", "%s"]);
 
 			$data = $genericCxn->getDatabaseData($compID, $season);
 		}
@@ -66,13 +66,8 @@ function sssfa_getCompData( $request )
 }
 
 add_action( 'rest_api_init', function(){
-	// register_rest_route( 'sfalive/v1', 'compdata/(?P<id>[\d]+)', $args = array(
-	// 	'methods' 	=> WP_REST_Server::READABLE,
-	// 	'callback' 	=> 'sssfa_getCompData',
-	// 	// 'args' 		=> sssfa_leagueTableArgs()
-	// ) );
 
-	register_rest_route( 'sfalive/v1', 'compdata/(?P<id>[\d]+)(?:/(?P<season>\d+))?', $args = array(
+	register_rest_route( 'sfalive/v1', 'compdata/(?P<id>[\d]+)?', $args = array(
 		'methods' 	=> WP_REST_Server::READABLE,
 		'callback' 	=> 'sssfa_getCompData',
 		'args' 		=> [

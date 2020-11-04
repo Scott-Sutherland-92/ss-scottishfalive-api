@@ -1,8 +1,9 @@
-import axios from "axios";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import axios from "axios";
 
-import LeagueCompetition from "./LeagueCompetition";
+import { Provider } from "./Context";
+import Competition from "./Competition";
 
 class CompetitionRoot extends Component {
 	constructor(props) {
@@ -12,39 +13,34 @@ class CompetitionRoot extends Component {
 			season: "",
 			comp: "",
 			data: [],
+			tab: "fixtures",
 			type: "League",
 		};
 	}
 
 	componentDidMount() {
 		const season = document
-			.getElementById("leagueCompetitionRoot")
+			.getElementById("competitionRoot")
 			.getAttribute("data-season");
 
 		const comp = document
-			.getElementById("leagueCompetitionRoot")
+			.getElementById("competitionRoot")
 			.getAttribute("data-comp");
-
-		this.setState({
-			season: season,
-			comp: comp,
-		});
 
 		this.fetchData(comp, season);
 	}
 
 	fetchData(compID, season) {
 		let endpointURL =
-			"/wp-json/sfalive/v1/compdata/" +
-			compID +
-			"/" +
-			season;
+			"/wp-json/sfalive/v1/compdata/" + compID + "?season=" + season;
 		axios
 			.get(endpointURL)
 			.then((response) => {
 				this.setState({
+					comp: compID,
 					data: response.data,
 					type: response.data.info.DATA.competitiontype,
+					season: season,
 					isLoading: false,
 				});
 			})
@@ -53,28 +49,37 @@ class CompetitionRoot extends Component {
 			});
 	}
 
-	render() {
-		let content;
-		switch (this.state.type) {
-			case "Cup":
-				content = <h1>Cup Competition</h1>;
-				break;
-			default:
-				content = <LeagueCompetition data={this.state.data} />;
-		}
+	handleTabChange = (e) => {
+		let tab = e.target.getAttribute("data-tab");
+		this.setState((state) => ({
+			tab: tab,
+		}));
+	};
 
+	render() {
 		let renderObj;
 		renderObj = this.state.isLoading ? (
 			<div className="ssfaComp__loadingBlock">LOADING</div>
 		) : (
-			<React.Fragment>{content}</React.Fragment>
+			<Competition data={this.state.data} type={this.state.type} />
 		);
 
-		return <div id="sfaComp__container">{renderObj}</div>;
+		let contextObj = {
+			comp: this.state.comp,
+			data: this.state.data,
+			type: this.state.type,
+			season: this.state.season,
+			tab: this.state.tab,
+			isLoading: this.state.isLoading,
+			tabFunction: this.handleTabChange,
+		};
+
+		return (
+			<Provider value={contextObj}>
+				<div id="sfaComp__container">{renderObj}</div>
+			</Provider>
+		);
 	}
 }
 
-const componentRoot = document.getElementById("leagueCompetitionRoot");
-if (componentRoot) {
-	ReactDOM.render(<CompetitionRoot />, componentRoot);
-}
+export default CompetitionRoot;

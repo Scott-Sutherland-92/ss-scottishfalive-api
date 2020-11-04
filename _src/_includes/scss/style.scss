@@ -45,6 +45,24 @@ $light 	: #F4F4F4;
 		}
 	}
 
+	.sfaComp__title {
+		margin-bottom: 30px;
+		text-align: center;
+
+		h1 {
+			font-size: 18px;
+			margin-bottom: 10px;
+
+			@media #{$small}{
+				font-size: 32px;
+			}
+		}
+
+		h6 {
+			font-weight: 400;
+		}
+	}
+
 	.sfaComp__tabButtons {
 		margin-bottom: 30px;
 
@@ -81,11 +99,12 @@ $light 	: #F4F4F4;
 				background: $light;
 				cursor: pointer;
 				display: block;
+				flex-grow: 1;
 				font-weight: 700;
 				margin: 0;
+				min-width: 33.333333%;
 				padding: 15px;
 				text-align: center;
-				width: 33.333333%;
 
 				&:hover {
 					background: darken($light, 20%);
@@ -146,4 +165,163 @@ $light 	: #F4F4F4;
 			}
 		}
 	} // .sfaComp_leagueTable
+
+	.sfaComp__match_group {
+		height: 60px;
+		list-style: none;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+
+		&.active__match_group { 
+			height: auto; 
+
+			li.sfaComp__match_date {
+				a {
+					background: $dark;
+					height: auto;
+
+					i { transform: rotate(180deg); }
+				}
+			}
+		}
+
+		.sfaComp__match_date {
+			margin-top: 0;
+			padding: 0;
+
+			a {
+				background-color: $dark;
+				color: white;
+				display: block;
+				font-weight: 400;
+				overflow: hidden;
+				padding: 15px 45px 15px 15px;
+				position: relative;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				i {
+					position: absolute;
+					right: 15px;
+					top: 15px;
+
+					transition: all ease 0.5s;
+				}
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+		
+		.sfaComp__fixture {
+			align-items: center;
+			border: solid 1px $light;
+			display: flex;
+			flex-wrap: wrap;
+			margin: 10px 0;
+			padding: 15px;
+			position: relative;
+			width: 100%;
+
+			&:nth-child(odd) {
+				// background-color: $light;
+			}
+
+			.fixture__match-up {
+				width: 100%;
+
+				@media #{$small}{
+					width: 75%;
+				}
+
+				.match-up__content {
+					align-items: center;
+					display: flex;
+					justify-content: center;
+
+					.match-up__home {
+						text-align: left;
+						width: 40%;
+
+						@media #{$small}{
+							text-align: right;
+						}
+					}
+
+					.match-up__away {
+						text-align: right;
+						width: 40%;
+
+						@media #{$small}{
+							text-align: left;
+						}
+					}
+
+					.match-up__team-name {	
+						display: block;
+						font-size: 0.9em;
+						overflow: hidden;
+						text-overflow: ellipsis;	
+						white-space: nowrap;			
+					}
+
+					.match-up__vs, .match-up__score {
+						font-weight: 700;
+						position: relative;
+						text-align: center;
+						width: 20%;
+
+						span {
+							display: inline-block;
+							padding: 10px;
+						}
+					}
+				}
+			}
+
+			.fixture__details {
+				margin-bottom: 20px;
+				width: 100%;
+
+				@media #{$small}{ 
+					border-right: solid 1px darken($light, 10%);
+					margin-bottom: 0;
+					padding: 10px 0;
+					width: 25%; }
+
+				.fixture__details-venue, .fixture__details--kickoff {
+					align-items: center;
+					display: flex;
+					font-size: 0.8em;
+					justify-content: center;
+					vertical-align: middle;
+
+					@media #{$small}{
+						justify-content: flex-start;
+					}
+
+					span {
+						display: block;
+						font-size: 1.2em;
+						margin-right: 10px;
+					}
+				}
+			}
+
+			.fixture__info {
+				width: 100%;
+
+				.info__content {
+					font-size: 12px;
+					text-align: center;
+
+					p {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
 } // #sfaComp__container
