@@ -226,6 +226,7 @@ $sfaLight: #f4f4f4;
 		.sfaComp__fixture {
 			align-items: center;
 			border-bottom: solid 1px $sfaLight;
+			cursor: pointer;
 			display: flex;
 			flex-wrap: wrap;
 			margin: 5px 0;
@@ -250,7 +251,39 @@ $sfaLight: #f4f4f4;
 
 			.fixture__match-up {
 				padding: 10px;
+				position: relative;
 				width: 100%;
+
+				.match-up__status {
+					background: red;
+					color: white;
+					font-size: 10px;
+					padding: 10px;
+					text-align: center;
+					width: 20%;
+
+					@media #{$small}{
+						background: transparent;
+						color: red;
+					}
+
+					span {
+						display: block;
+						width: 100%;
+
+						&.status__type {
+							font-weight: 700;
+						}
+
+						&.status__reason {
+							display: none;
+
+							@media #{$small}{
+								display: block;
+							}
+						}
+					}
+				}
 
 				.match-up__content {
 					align-items: center;

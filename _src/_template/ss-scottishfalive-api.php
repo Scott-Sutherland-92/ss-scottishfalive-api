@@ -28,7 +28,7 @@ if (!class_exists('SSScottishFaLive')) {
 	class SSScottishFaLive
 	{
 		private static $instance;
-		private $version = "1.0.0";
+		private $version = "1.1.0";
 
 		// API KEYS
 		protected static $clientID = "645071006";
@@ -147,7 +147,7 @@ if (!class_exists('SSScottishFaLive')) {
 		public function setScriptsAndStyles()
 		{
 			$plugin_url = plugin_dir_url( __FILE__ );
-			wp_enqueue_style( 'SSScottishFaLive-style', $plugin_url . 'style.css', [], false, 'all' );
+			wp_enqueue_style( 'SSScottishFaLive-style', $plugin_url . 'style.css', [], "1.1.0", 'all' );
 
 			// Enqueue Scripts
 			$plugin_path = plugin_dir_path( __FILE__ );

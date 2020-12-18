@@ -1,6 +1,29 @@
 import React, { Component } from "react";
 import { Consumer } from "../Context";
 
+const CenterContent = ({ matchType, matchStatus, scores, kickoff }) => {
+	if (matchStatus.status) {
+		return (
+			<div className="match-up__status">
+				<span className="status__type">{matchStatus.content}</span>
+				{matchStatus.reason ? <span className="status__reason">{matchStatus.reason}</span> : null}
+			</div>
+		);
+	} else {
+		if (matchType == "results") {
+			return (
+				<div className="match-up__score">
+					{scores.home}
+					<span>-</span>
+					{scores.away}
+				</div>
+			);
+		} else {
+			return <div className="match-up__vs">{kickoff}</div>;
+		}
+	}
+};
+
 export default class FixtureRow extends Component {
 	constructor(props) {
 		super(props);
@@ -89,6 +112,34 @@ export default class FixtureRow extends Component {
 		};
 	}
 
+	getMatchStatus(match) {
+		let status = match.postponed ? true : false;
+		let statusType = "";
+		let statusReason = null;
+
+		if (match.postponed) {
+			statusType = "Postponed";
+		}
+
+		if (match.cancelled) {
+			statusType = "Cancelled";
+		}
+
+		if (match.abandoned) {
+			statusType = "Match Abandoned";
+		}
+
+		if (match.cancelreason) {
+			statusReason = match.cancelreason;
+		}
+
+		return {
+			status: status,
+			content: statusType,
+			reason: statusReason
+		};
+	}
+
 	render() {
 		return (
 			<Consumer>
@@ -104,6 +155,7 @@ export default class FixtureRow extends Component {
 
 					let matchDetails = this.getMatchDetails(match);
 					let scores = this.getMatchScores(match);
+					let matchStatus = this.getMatchStatus(match);
 
 					let infoState = this.state.details
 						? "fixture__activeDetails"
@@ -122,15 +174,14 @@ export default class FixtureRow extends Component {
 											{match.homename}
 										</div>
 									</div>
-									{matchType == "results" ? (
-										<div className="match-up__score">
-											{scores.home}
-											<span>-</span>
-											{scores.away}
-										</div>
-									) : (
-										<div className="match-up__vs">{kickoff}</div>
-									)}
+									{
+										<CenterContent
+											matchType={matchType}
+											matchStatus={matchStatus}
+											scores={scores}
+											kickoff={kickoff}
+										/>
+									}
 									<div className="match-up__away">
 										<div className="match-up__team-name">
 											{match.awayname}
